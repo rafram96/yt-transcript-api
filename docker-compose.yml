@@ -1,0 +1,18 @@
+services:
+  yt-transcript-api:
+    build:
+      context: .
+      args:
+        WHISPER_MODEL: ${WHISPER_MODEL:-base}
+    container_name: yt-transcript-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    restart: unless-stopped
+    # Opcional: persistir cache de modelos entre reinicios
+    volumes:
+      - whisper-cache:/root/.cache
+
+volumes:
+  whisper-cache:
